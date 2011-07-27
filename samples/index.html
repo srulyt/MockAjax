@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<title>Mock Ajax</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript" ></script>
+		<script src="../src/mockajax.js" type="text/javascript" ></script>
+		<script type="text/javascript">
+			
+			function doAjax(){
+				$.ajax({
+					url: "sample.json",
+					dataType:"json",
+					success: function(result){
+						alert(result.hello + result.world);
+					}
+				});
+			}
+			
+			$(function(){
+				doAjax();
+				
+				MockAjax.mock({
+					callback: function(options){
+						alert(options.url);
+					},
+					responseStatus: "success",
+					responseData: { hello: "world", world: "hello" },
+					wait: 50,
+					triggerCallbacks: true
+				});
+				
+				doAjax();
+				
+				MockAjax.reset();
+				
+				doAjax();
+			});
+		</script>
+	</head>
+	<body>
+		<h1>Mock Ajax</h1>
+	</body>
+</html>
